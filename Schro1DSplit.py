@@ -28,12 +28,12 @@ stddraw.setCanvasSize(500,250);
 
 # set the axis scales
 stddraw.setXscale(0.0, 20.0);
-stddraw.setYscale(-2.5, 2.5);
+stddraw.setYscale(-1.5, 1.5);
 
 i = 0
 n = 0
-NX = 200
-ic = 100
+NX = 400
+ic = 200
 dx = 20.0/NX
 
 # For stable simulation dt < dx
@@ -98,33 +98,33 @@ while True:
     for i in range(1,NX-1):
         psiI[i] = psiI[i] + cc*(psiR[i+1] - 2*psiR[i] + psiR[i-1]) - v[i]*psiR[i]*dt
 
-
+    if n%20 == 0:		
 		# (5) Draw psiR 
-    stddraw.clear()
-    stddraw.setPenColor(stddraw.RED) 
-    for i in range(NX):
-        x1 = i*dx
-        y1 = psiR[i]
-        x2 = (i+1)*dx
-        y2 = psiR[i+1]
-        stddraw.line(x1, y1, x2, y2)
+        stddraw.clear()
+        stddraw.setPenColor(stddraw.RED) 
+        for i in range(NX):
+            x1 = i*dx
+            y1 = psiR[i]
+            x2 = (i+1)*dx
+            y2 = psiR[i+1]
+            stddraw.line(x1, y1, x2, y2)
 				
-    stddraw.setPenColor(stddraw.BLUE) 
-    for i in range(NX):
-        x1 = i*dx
-        y1 = psiI[i]
-        x2 = (i+1)*dx
-        y2 = psiI[i+1]
-        stddraw.line(x1, y1, x2, y2) 
+        stddraw.setPenColor(stddraw.BLUE) 
+        for i in range(NX):
+            x1 = i*dx
+            y1 = psiI[i]
+            x2 = (i+1)*dx
+            y2 = psiI[i+1]
+            stddraw.line(x1, y1, x2, y2) 
 
-    stddraw.setPenColor(stddraw.GREEN) 
-    for i in range(NX):
-        x1 = i*dx
-        y1 = math.sqrt(psiR[i]*psiR[i] + psiI[i]*psiI[i])
-        x2 = (i+1)*dx
-        y2 = math.sqrt(psiR[i+1]*psiR[i+1] + psiI[i+1]*psiI[i+1])
-        stddraw.line(x1, y1, x2, y2) 
+        stddraw.setPenColor(stddraw.GREEN) 
+        for i in range(NX):
+            x1 = i*dx
+            y1 = math.sqrt(psiR[i]*psiR[i] + psiI[i]*psiI[i])
+            x2 = (i+1)*dx
+            y2 = math.sqrt(psiR[i+1]*psiR[i+1] + psiI[i+1]*psiI[i+1])
+            stddraw.line(x1, y1, x2, y2) 
     
-    # Display and wait for 5 ms
-    stddraw.show(5);
+        # Display and wait for 5 ms
+        stddraw.show(5);
 
