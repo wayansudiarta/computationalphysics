@@ -6,17 +6,17 @@
 #  Fisika, Fakultas MIPA, Universitas Mataram
 #  last updated: 21 November 2018
 #
-#  Split Schrodinger Equation 1D
+#  Schrodinger Equation 1D in imaginary time
 #  A particle propagating in +x direction
 #
-#  dpsiR/dt = - (1/2)d^2 psiI/dx^2 + V(x) psiI
-#  dpsiI/dt =   (1/2)d^2 psiR/dx^2 - V(x) psiR
+#  dpsi/dt = (1/2)d^2 psi/dx^2 - V(x) psi
 #
-#  Ref:  P.B. Visscher, A Fast Explicit Algorithm 
-#        for the Time-Dependent Schrodinger Equation,
-#        Computers In Physics, 596–598 (Nov/Dec 1991).  
+#  Ref:  
+#  I. W. Sudiarta, D. J. W. Geldart
+#  Journal of Physics A: Mathematical and Theoretical 40 (8), 1885
+
 #
-#  run:  % python Schro1DSplit.py
+#  run:  % python Schro1DDifusi.py
 #
 
 import stddraw
