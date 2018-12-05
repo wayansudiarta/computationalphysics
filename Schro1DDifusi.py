@@ -27,14 +27,14 @@ import math
 stddraw.setCanvasSize(500,500);
 
 # set the axis scales
-stddraw.setXscale(0.0, 1.0);
-stddraw.setYscale(-1.5, 1.5);
+stddraw.setXscale(0.0, 10.0);
+stddraw.setYscale(-0.5, 3);
 
 i = 0
 n = 0
 NX = 100
 ic = 50
-dx = 1.0/NX
+dx = 10.0/NX
 dx2 = dx*dx
 coef = 0;
 
@@ -55,7 +55,13 @@ freq = 1.0
 for i in range(NX+1):
     psi[i] = 0.0 
     psiNew[i] = 0.0
-    v[i] = 0.0
+    x = (i-NX/2)*dx
+    # v[i] = 0.5*x*x # harmonik
+    if i >= 33 and i <= 67:
+        v[i] = 1
+    else :
+        v[i] = 2
+  
 
 # psi awal ?    
 for i in range(1, NX-1):
@@ -72,20 +78,32 @@ while True:
         psiNew[i] = a[i]*psi[i] + b[i]*(psi[i+1] - 2*psi[i] + psi[i-1])
 
     # (3) Save
-    # (3) Hitung Koefisien Normalisasi
-    coef = 0 
     for i in range(1,NX-1):
-        coef += psi[i]*psi[i]
-    coef = coef*dx
-    coef = math.sqrt(1.0/coef)    
+        psi[i] = psiNew[i]
 
+    # (3) Hitung Energi
+    integral1 = 0.0
+    integral2 = 0.0
     for i in range(1,NX-1):
-        psi[i] = coef*psiNew[i]
+        integral1 += psi[i]*psi[i]
+        d2psidx2 = -0.5*(psi[i+1] - 2*psi[i] + psi[i-1])/dx2
+        integral2 += psi[i]*(d2psidx2 + v[i]*psi[i])
+    integral1 *= dx
+    integral2 *= dx	 
+
+    energi = integral2/integral1
+    print(energi)
+
+    #Normalisasi
+    coef = integral1
+    coef = math.sqrt(1.0/coef)    
+    for i in range(1,NX-1):
+        psi[i] = coef*psi[i]
         
     if n%20 == 0:		
-		# (5) Draw psi 
+    # (5) Draw psi 
         stddraw.clear()
-        stddraw.setPenColor(stddraw.RED) 
+        stddraw.setPenColor(stddraw.BLUE) 
         for i in range(NX):
             x1 = i*dx
             y1 = psi[i]
@@ -93,6 +111,13 @@ while True:
             y2 = psi[i+1]
             stddraw.line(x1, y1, x2, y2)
     
+        stddraw.setPenColor(stddraw.RED) 
+        for i in range(NX):
+            x1 = i*dx
+            y1 = v[i]
+            x2 = (i+1)*dx
+            y2 = v[i+1]
+            stddraw.line(x1, y1, x2, y2)
         # Display and wait for 5 ms
         stddraw.show(5);
 
